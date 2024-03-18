@@ -1,24 +1,16 @@
 [tool.poetry]
-name = "todo_packagename"  # TODO - rename src/todo_packagename and change here to reflect
+name = "marlos"  # TODO - rename src/todo_packagename and change here to reflect
 version = "0.1.0"
-description = ""  # TODO
-authors = ["Applied Research Centre, The Alan Turing Institute <arc@turing.ac.uk>"]  # TODO
+description = "An exploration of the off-switch game in a multi-agent reinforcement-learning setting."
+authors = [
+    "Applied Research Centre, The Alan Turing Institute <arc@turing.ac.uk>",
+    "Edmund Dable-Heath <edable-heath@turing.ac.uk>",
+    ] 
 readme = "README.md"
 
-[tool.poetry.dependencies]
-python = "^3.9"  # TODO
-
-[tool.poetry.group.dev.dependencies]
-pytest = "^8.0.2"
-pytest-mock = "^3.12.0"
-black = "^24.2.0"
-flake8 = "^7.0.0"
-isort = "^5.13.2"
-pre-commit = "^3.6.2"
-
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
 
 [tool.black]
 line-length = 88
