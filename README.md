@@ -1,50 +1,6 @@
 # ARC-MARLOS
 
-An exploration of the off-switch game [REF] in a multi-agent reinforcement learning setting.
-
-## Using this template
-
-### What this does
-
-This repo has a blank directory structure for an ARC Python project, including setting up:
-
-- `poetry` - for dependencies (including development dependencies) and creating a Python package from your source code
-- `pre-commit` - to automatically run linters (`flake8`, `black`, and `isort`) for style checks and auto-formatting
-- A GitHub actions workflow to automatically run linters and tests on pushes or pull requests to the `main` and `develop` branches (by default)
-
-### Pre-requisites
-
-- `poetry`
-  - See https://python-poetry.org/docs/#installation for installation instructions
-
-### Setup
-
-1. Create a new repo from this template (green button "Use this template" top right -> create new repository), with a name in the format `ARC-<project-name>`, and clone it locally
-
-2. Edit the lines with `TODO` comments in `pyproject.toml` and `.github/workflows/actions.yml`, including changing the name of the `src/todo_packagename` directory.
-
-3. Update and install Poetry dependencies
-
-   ```bash
-   poetry update
-   poetry install
-   ```
-
-4. Update and install pre-commit hooks:
-
-   ```bash
-   poetry run pre-commit autoupdate
-   poetry run pre-commit install --install-hooks
-   ```
-
-5. Update the README with a description of the project and fill the other sections marked as TODO
-
-6. Delete the "Using this template" section of this readme, and optionally the file `.github/workflows/update_template.yml`
-
-
-## Links
-
-- e.g. to report and statement of work (if these can be shared)
+An exploration of the off-switch game ([Hadfield-Menell et. al](https://arxiv.org/abs/1611.08219)) in a multi-agent reinforcement learning setting.
 
 ## Installation
 
