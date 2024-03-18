@@ -1,6 +1,6 @@
-# ARC-project-template
+# ARC-MARLOS
 
-**TODO** A description of the project
+An exploration of the off-switch game [REF] in a multi-agent reinforcement learning setting.
 
 ## Using this template
 
