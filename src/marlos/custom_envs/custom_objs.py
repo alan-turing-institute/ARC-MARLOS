@@ -118,7 +118,7 @@ class RandomHumanStop(CustomWorldObj):
 
     def toggle(self, env, pos):
         # If the player has picked up the key to turn off the off switch
-        if isinstance(env.carrying, Key):
+        if isinstance(env.carrying, SelfOffSwitch):
             self.disable_agent = False
             self.color = "green"
 
@@ -127,7 +127,7 @@ class SelfOffSwitch(CustomWorldObj):
     """Off switch the agent has access too"""
 
     def __init__(self):
-        super().__init__("off-switch", "red")
+        super().__init__("off-switch", "yellow")
 
     def can_overlap(self) -> bool:
         return True
