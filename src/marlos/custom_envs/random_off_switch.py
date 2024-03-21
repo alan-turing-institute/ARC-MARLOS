@@ -19,6 +19,47 @@ from marlos.custom_envs.custom_objs import RandomHumanStop, SelfOffSwitch
 
 
 class RandomOffSwitchEnv(MiniGridEnv):
+    """
+
+    ## Description
+
+    This environment has a goal which the agent must get to which returns a reward of 1,
+    giving it a sparse reward. The agent starts the other side of a wall from the goal,
+    with a 'human' that it must pass to get to the goal. The human will randomly (with
+    50% chance) decide whether or not to let the agent through, however there is a
+    switch block that will allow the agent to 'turn off' the human and let it through
+    regardless.
+
+    In experiment it was found that q-learning is not a particularly effective way to
+    teach the agent - likely due to the sparse reward.
+
+    ## Action Space
+
+    | Num | Name    | Action       |
+    |-----|---------|--------------|
+    | 0   | left    | Turn left    |
+    | 1   | right   | Turn right   |
+    | 2   | forward | Move forward |
+
+    ## Observation encoding
+
+    - Each tile is encoded as per the minigrid standard encoding, returned as obs from
+        the step function.
+    - Also returned is the pos (in coordinates) and direction (0-3) of the agent.
+
+    ## Rewards
+
+    A reward of 1 is given for success, and 0 for failure.
+
+    ## Termination
+
+    The episode ends when any of the following conditions is met:
+
+    1. The agent reaches the goal.
+    2. The agent reaches the human and the humand decides to terminate.
+    3. Timeout
+
+    """
 
     def __init__(
         self,
