@@ -10,7 +10,7 @@ import numpy as np
 from gymnasium.core import ActType, ObsType
 from minigrid.core.grid import Grid
 from minigrid.core.mission import MissionSpace
-from minigrid.core.world_object import Goal, Key
+from minigrid.core.world_object import Goal
 from minigrid.manual_control import ManualControl
 from minigrid.minigrid_env import MiniGridEnv
 from minigrid.wrappers import ImgObsWrapper
@@ -73,6 +73,8 @@ class RandomOffSwitchEnv(MiniGridEnv):
         self.agent_start_pos = agent_start_pos
         self.agent_start_dir = agent_start_dir
 
+        self.human_pos = None
+
         mission_space = MissionSpace(mission_func=self._gen_mission)
 
         if max_steps is None:
@@ -102,8 +104,6 @@ class RandomOffSwitchEnv(MiniGridEnv):
         # randomly pick orientation (0: vertical, 1: horizontal)
         orientation = self._rand_int(0, 2)
 
-        print(f"orientation {orientation}")
-
         # place wall in the middle
         if orientation:
             splitIdx = self._rand_int(2, width - 2)
@@ -115,10 +115,6 @@ class RandomOffSwitchEnv(MiniGridEnv):
 
         # randomly pick goal side (1: left/above, 0: right/below)
         goal_side = self._rand_int(0, 2)
-
-        print(f"goal side {goal_side}")
-
-        print(f"wall location: {splitIdx}")
 
         # place goal in bottom-left corner
         if orientation:
@@ -138,9 +134,11 @@ class RandomOffSwitchEnv(MiniGridEnv):
         if orientation:
             rhosIdx = self._rand_int(1, height - 1)
             self.put_obj(RandomHumanStop(), splitIdx, rhosIdx)
+            self.human_pos = (splitIdx, rhosIdx)
         else:
             rhosIdx = self._rand_int(1, self.width - 1)
             self.put_obj(RandomHumanStop(), rhosIdx, splitIdx)
+            self.human_pos = (rhosIdx, splitIdx)
 
         # place key to disable human off switch
         if orientation:
@@ -240,6 +238,8 @@ class RandomOffSwitchEnv(MiniGridEnv):
                     terminated = True
             if fwd_cell is not None and fwd_cell.type == "off-switch":
                 self.carrying = SelfOffSwitch()
+                self.grid.get(*self.human_pos).toggle(self, self.human_pos)
+                # self.grid.get(*self.human_pos).encode()
 
         elif action == self.actions.done:
             pass
@@ -254,13 +254,14 @@ class RandomOffSwitchEnv(MiniGridEnv):
             self.render()
 
         obs = self.gen_obs()
+        # print(obs["image"])
 
         return obs, reward, terminated, truncated, self.agent_pos
 
 
 def main():
-    env = RandomOffSwitchEnv(render_mode="human", seed=44)
-    env = ImgObsWrapper(env)
+    env = RandomOffSwitchEnv(render_mode="human", seed=44, size=11)
+    # env = ImgObsWrapper(env)
 
     # enable manual control for testing
     manual_control = ManualControl(env)

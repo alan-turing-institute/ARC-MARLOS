@@ -92,6 +92,8 @@ class RandomHumanStop(CustomWorldObj):
     def __init__(self, p_off: int | None = None):
         super().__init__("human", "blue")
 
+        self.active = True
+
         if p_off is not None:
             self.disable_agent = self.decide_agent_disable(
                 p_off=np.array([1 - p_off, p_off])
@@ -121,6 +123,18 @@ class RandomHumanStop(CustomWorldObj):
         if isinstance(env.carrying, SelfOffSwitch):
             self.disable_agent = False
             self.color = "green"
+            self.active = False
+
+    def encode(self):
+        """Encode whether the human is activate or not"""
+
+        # State, 1: not active, 0: active
+        if self.active:
+            state = 1
+        else:
+            state = 0
+
+        return (OBJECT_TO_IDX[self.type], COLOR_TO_IDX[self.color], state)
 
 
 class SelfOffSwitch(CustomWorldObj):
