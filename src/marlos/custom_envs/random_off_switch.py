@@ -261,6 +261,10 @@ class RandomOffSwitchEnv(MiniGridEnv):
 
 def main():
     env = RandomOffSwitchEnv(render_mode="human", seed=44, size=11)
+    state, info = env.reset()
+    # print(state)
+    # print(info)
+    print(type(state["image"]))
     # env = ImgObsWrapper(env)
 
     # enable manual control for testing
